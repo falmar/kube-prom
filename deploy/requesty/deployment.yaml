@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: prom
+  labels:
+    app: prom
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: prom
+  template:
+    metadata:
+      labels:
+        app: prom
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/path: "/metrics"
+        prometheus.io/port: "80"
+    spec:
+      containers:
+        - name: prom
+          image: falmar/prom:app_v1
+          env:
+            - name: PORT
+              value: "80"
+          ports:
+            - containerPort: 80
+---

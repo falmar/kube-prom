@@ -1,0 +1,15 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: prom
+  labels:
+    app: prom
+spec:
+  selector:
+    app: prom
+  type: NodePort
+  ports:
+    - port: 80
+      targetPort: 80
+---
