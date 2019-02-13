@@ -18,8 +18,8 @@ spec:
       serviceAccountName: prometheus
       automountServiceAccountToken: true
       containers:
-        - name: prom
-          image: falmar/prom:prom_v1
+        - name: prometheus
+          image: falmar/prom:prometheus_v2
           ports:
             - containerPort: 9090
 ---

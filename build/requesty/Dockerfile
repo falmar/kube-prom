@@ -1,5 +1,5 @@
 FROM alpine:3.8
 
-COPY app /go-app/app
+COPY bin/requesty /go-app/requesty
 
-CMD ["./go-app/app"]
+CMD ["./go-app/requesty"]

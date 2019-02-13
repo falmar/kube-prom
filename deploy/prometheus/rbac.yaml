@@ -17,7 +17,7 @@ metadata:
 rules:
   - verbs: ["get", "list", "watch"]
     apiGroups: [""]
-    resources: ["pods"]
+    resources: ["pods", "nodes", "nodes/proxy"]
   - nonResourceURLs: ["/metrics"]
     verbs: ["get"]
 ---

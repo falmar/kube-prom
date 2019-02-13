@@ -7,30 +7,30 @@ import (
 )
 
 func main() {
-	for i := 0; i < 4; i++ {
+	for i := 0; i < 20; i++ {
 		go func() {
 			for {
-				_, err := http.Get("http://192.168.99.100:30249/handler")
+				_, err := http.Get("http://192.168.99.100:32152/handler")
 
 				if err != nil {
 					log.Println("handler err:", err)
 					return
 				}
 
-				<-time.After(time.Millisecond * 200)
+				<-time.After(time.Millisecond * 100)
 			}
 		}()
 
 		go func() {
 			for {
-				_, err := http.Get("http://192.168.99.100:30249/error")
+				_, err := http.Get("http://192.168.99.100:32152/error")
 
 				if err != nil {
 					log.Println("handler err:", err)
 					return
 				}
 
-				<-time.After(time.Millisecond * 600)
+				<-time.After(time.Millisecond * 100)
 			}
 		}()
 	}

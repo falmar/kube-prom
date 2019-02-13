@@ -1,26 +1,26 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: prom
+  name: requesty
   labels:
-    app: prom
+    app: requesty
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
-      app: prom
+      app: requesty
   template:
     metadata:
       labels:
-        app: prom
+        app: requesty
       annotations:
         prometheus.io/scrape: "true"
         prometheus.io/path: "/metrics"
         prometheus.io/port: "80"
     spec:
       containers:
-        - name: prom
-          image: falmar/prom:app_v1
+        - name: server
+          image: falmar/prom:requesty_v1
           env:
             - name: PORT
               value: "80"
