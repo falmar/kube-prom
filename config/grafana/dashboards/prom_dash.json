@@ -15,8 +15,7 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 2,
-  "iteration": 1549857721329,
+  "iteration": 1550090800538,
   "links": [],
   "panels": [
     {
@@ -63,13 +62,13 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(rate(http_requests_total[$interval])) by (code)",
+          "expr": "sum(rate(http_requests_total{kubernetes_pod_name!=\"\",node_name=~\"$node\"}[$interval])) by (code, kubernetes_pod_name)",
           "format": "time_series",
           "hide": false,
           "instant": false,
           "interval": "",
           "intervalFactor": 1,
-          "legendFormat": "{{code}}  {{app}}",
+          "legendFormat": "{{code}}  {{kubernetes_pod_name}}",
           "refId": "A"
         }
       ],
@@ -215,31 +214,57 @@
       }
     }
   ],
-  "refresh": false,
+  "refresh": "15s",
   "schemaVersion": 16,
   "style": "dark",
   "tags": [],
   "templating": {
     "list": [
       {
+        "allValue": ".+",
+        "current": {
+          "tags": [],
+          "text": "All",
+          "value": "$__all"
+        },
+        "datasource": "Prometheus",
+        "definition": "label_values(node_name)",
+        "hide": 0,
+        "includeAll": true,
+        "label": "",
+        "multi": false,
+        "name": "node",
+        "options": [],
+        "query": "label_values(node_name)",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
         "auto": true,
         "auto_count": 30,
         "auto_min": "30s",
         "current": {
-          "text": "auto",
-          "value": "$__auto_interval_interval"
+          "text": "1m",
+          "value": "1m"
         },
         "hide": 0,
         "label": null,
         "name": "interval",
         "options": [
           {
-            "selected": true,
+            "selected": false,
             "text": "auto",
             "value": "$__auto_interval_interval"
           },
           {
-            "selected": false,
+            "selected": true,
             "text": "1m",
             "value": "1m"
           },
@@ -302,8 +327,8 @@
     ]
   },
   "time": {
-    "from": "2019-02-11T01:30:41.000Z",
-    "to": "2019-02-11T01:40:41.000Z"
+    "from": "now-15m",
+    "to": "now"
   },
   "timepicker": {
     "refresh_intervals": [
@@ -334,5 +359,5 @@
   "timezone": "",
   "title": "Prom",
   "uid": "pkzDR0Xiz",
-  "version": 7
+  "version": 1
 }

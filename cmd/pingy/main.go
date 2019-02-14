@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	for i := 0; i < 20; i++ {
+	for i := 0; i < 30; i++ {
 		go func() {
 			for {
 				_, err := http.Get("http://192.168.99.100:32152/handler")
