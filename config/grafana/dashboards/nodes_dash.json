@@ -15,8 +15,7 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 2,
-  "iteration": 1550105083044,
+  "iteration": 1550191874543,
   "links": [],
   "panels": [
     {
@@ -250,7 +249,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "sum(((node_filesystem_size_bytes{device=\"rootfs\"} - node_filesystem_free_bytes{device=\"rootfs\"}) / node_filesystem_size_bytes{device=\"rootfs\"} * on(instance) group_left(node_name) node_meta{node_name=~\"$node\"}) * 100) / count((node_filesystem_size_bytes{device=\"rootfs\"} * on(instance) group_left(node_name) node_meta{node_name=~\"$node\"}))",
+          "expr": "sum(((node_filesystem_size_bytes{mountpoint=\"/\"} - node_filesystem_free_bytes{mountpoint=\"/\"}) / node_filesystem_size_bytes{mountpoint=\"/\"} * on(instance) group_left(node_name) node_meta{node_name=~\"$node\"}) * 100) / count((node_filesystem_size_bytes{mountpoint=\"/\"} * on(instance) group_left(node_name) node_meta{node_name=~\"$node\"}))",
           "format": "time_series",
           "intervalFactor": 1,
           "refId": "A"
@@ -278,6 +277,7 @@
         "rgba(237, 129, 40, 0.89)",
         "#d44a3a"
       ],
+      "datasource": "Prometheus",
       "decimals": 0,
       "format": "s",
       "gauge": {
@@ -293,6 +293,7 @@
         "x": 18,
         "y": 0
       },
+      "hideTimeOverride": false,
       "id": 18,
       "interval": null,
       "links": [],
@@ -327,11 +328,11 @@
         "lineColor": "rgb(31, 120, 193)",
         "show": false
       },
-      "tableColumn": "",
+      "tableColumn": "Value",
       "targets": [
         {
-          "expr": "topk(1, sum((node_time_seconds - node_boot_time_seconds) * on(instance) group_left(node_name) node_meta{node_name=~\"$node\"}) by (node_name))",
-          "format": "time_series",
+          "expr": "topk(1, sum(node_time_seconds - node_boot_time_seconds * on(instance) group_left(node_name) node_meta{node_name=~\".+\"}) by (node_name))",
+          "format": "table",
           "intervalFactor": 1,
           "legendFormat": "",
           "refId": "A"
@@ -341,13 +342,7 @@
       "title": "Uptime",
       "type": "singlestat",
       "valueFontSize": "80%",
-      "valueMaps": [
-        {
-          "op": "=",
-          "text": "N/A",
-          "value": "null"
-        }
-      ],
+      "valueMaps": [],
       "valueName": "current"
     },
     {
@@ -734,7 +729,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "sum((node_filesystem_size_bytes{device=\"rootfs\"} - node_filesystem_free_bytes{device=\"rootfs\"}) * on(instance) group_left(node_name) node_meta{node_name=~\"$node\"})",
+          "expr": "sum((node_filesystem_size_bytes{mountpoint=\"/\"} - node_filesystem_free_bytes{mountpoint=\"/\"}) * on(instance) group_left(node_name) node_meta{node_name=~\"$node\"})",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "",
@@ -815,7 +810,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "sum(node_filesystem_size_bytes{device=\"rootfs\"} * on(instance) group_left(node_name) node_meta{node_name=~\"$node\"})",
+          "expr": "sum(node_filesystem_size_bytes{mountpoint=\"/\"} * on(instance) group_left(node_name) node_meta{node_name=~\"$node\"})",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "",
@@ -959,11 +954,11 @@
       "renderer": "flot",
       "seriesOverrides": [],
       "spaceLength": 10,
-      "stack": true,
+      "stack": false,
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum((node_memory_MemTotal_bytes - node_memory_MemFree_bytes - node_memory_Cached_bytes - node_memory_Buffers_bytes - node_memory_Slab_bytes) * on(instance) group_left(node_name) node_meta{node_name=~\"$node\"})",
+          "expr": "sum((node_memory_MemTotal_bytes - node_memory_MemFree_bytes - node_memory_Cached_bytes - node_memory_Buffers_bytes - node_memory_Slab_bytes) * on(instance) group_left(node_name) node_meta{node_name=~\"$node\"}) by (node_name)",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "{{node_name}}",
@@ -1049,11 +1044,11 @@
       "renderer": "flot",
       "seriesOverrides": [],
       "spaceLength": 10,
-      "stack": false,
+      "stack": true,
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum((node_filesystem_size_bytes{device=\"rootfs\"} - node_filesystem_free_bytes{device=\"rootfs\"}) * on(instance) group_left(node_name) node_meta{node_name=~\"$node\"}) by (device)",
+          "expr": "sum((node_filesystem_size_bytes{mountpoint=\"/\"} - node_filesystem_free_bytes{mountpoint=\"/\"}) * on(instance) group_left(node_name) node_meta{node_name=~\"$node\"}) by (node_name)",
           "format": "time_series",
           "instant": false,
           "interval": "",
@@ -1447,5 +1442,5 @@
   "timezone": "",
   "title": "Kubernetes Nodes",
   "uid": "uCHnMyumz",
-  "version": 6
+  "version": 1
 }
