@@ -7,10 +7,12 @@ import (
 )
 
 func main() {
+	addr := "http://192.168.99.100:31212"
+
 	for i := 0; i < 30; i++ {
 		go func() {
 			for {
-				_, err := http.Get("http://192.168.99.100:32152/handler")
+				_, err := http.Get(addr + "/handler")
 
 				if err != nil {
 					log.Println("handler err:", err)
@@ -23,14 +25,14 @@ func main() {
 
 		go func() {
 			for {
-				_, err := http.Get("http://192.168.99.100:32152/error")
+				_, err := http.Get(addr + "/error")
 
 				if err != nil {
 					log.Println("handler err:", err)
 					return
 				}
 
-				<-time.After(time.Millisecond * 100)
+				<-time.After(time.Millisecond * 500)
 			}
 		}()
 	}

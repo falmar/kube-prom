@@ -16,7 +16,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": 1,
-  "iteration": 1550200796798,
+  "iteration": 1550204932546,
   "links": [],
   "panels": [
     {
@@ -84,7 +84,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "100 - ((sum(irate(node_cpu_seconds_total{mode=\"idle\", node_name=~\"$node\"}[$interval])) * 100) / count(node_cpu_seconds_total{mode=\"user\", node_name=~\"$node\"}))",
+          "expr": "100 - ((sum(irate(node_cpu_seconds_total{mode=\"idle\", node_name=~\"$node\"}[$interval])) * 100) / sum(machine_cpu_cores{node_name=~\"$node\"}))",
           "format": "time_series",
           "intervalFactor": 1,
           "refId": "A"
@@ -730,7 +730,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "sum((node_filesystem_size_bytes{mountpoint=\"/data\"} - node_filesystem_free_bytes{mountpoint=\"/data\"}) * on(instance) group_left(node_name) node_meta{node_name=~\"$node\"})",
+          "expr": "sum((node_filesystem_size_bytes{mountpoint=\"/\"} - node_filesystem_free_bytes{mountpoint=\"/\"}) * on(instance) group_left(node_name) node_meta{node_name=~\"$node\"})",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "",
@@ -811,7 +811,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "sum(node_filesystem_size_bytes{mountpoint=\"/data\"} * on(instance) group_left(node_name) node_meta{node_name=~\"$node\"})",
+          "expr": "sum(node_filesystem_size_bytes{mountpoint=\"/\"} * on(instance) group_left(node_name) node_meta{node_name=~\"$node\"})",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "",
@@ -900,7 +900,7 @@
           "format": "percent",
           "label": null,
           "logBase": 1,
-          "max": null,
+          "max": "100",
           "min": null,
           "show": true
         },
@@ -986,7 +986,7 @@
       },
       "yaxes": [
         {
-          "decimals": 2,
+          "decimals": 3,
           "format": "bytes",
           "label": null,
           "logBase": 1,
@@ -1078,7 +1078,7 @@
       },
       "yaxes": [
         {
-          "decimals": 2,
+          "decimals": null,
           "format": "bytes",
           "label": "",
           "logBase": 1,
@@ -1177,7 +1177,7 @@
       },
       "yaxes": [
         {
-          "decimals": 2,
+          "decimals": null,
           "format": "iops",
           "label": "",
           "logBase": 1,
@@ -1276,7 +1276,7 @@
       },
       "yaxes": [
         {
-          "decimals": 2,
+          "decimals": null,
           "format": "Bps",
           "label": "",
           "logBase": 1,
@@ -1285,6 +1285,7 @@
           "show": true
         },
         {
+          "decimals": null,
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -1411,7 +1412,7 @@
     ]
   },
   "time": {
-    "from": "now-30m",
+    "from": "now-15m",
     "to": "now"
   },
   "timepicker": {
