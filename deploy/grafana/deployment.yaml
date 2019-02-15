@@ -3,6 +3,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: grafana
+  namespace: prometheus
   labels:
     app: grafana
 spec:
@@ -16,7 +17,7 @@ spec:
     spec:
       containers:
         - name: grafana
-          image: falmar/prom:grafana_v1
+          image: falmar/prom:grafana_v2
           ports:
             - containerPort: 3000
 ---

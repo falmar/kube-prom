@@ -3,6 +3,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: requesty
+  namespace: default
   labels:
     app: requesty
 spec:

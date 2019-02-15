@@ -15,7 +15,8 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "iteration": 1550191874543,
+  "id": 1,
+  "iteration": 1550200796798,
   "links": [],
   "panels": [
     {
@@ -249,7 +250,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "sum(((node_filesystem_size_bytes{mountpoint=\"/\"} - node_filesystem_free_bytes{mountpoint=\"/\"}) / node_filesystem_size_bytes{mountpoint=\"/\"} * on(instance) group_left(node_name) node_meta{node_name=~\"$node\"}) * 100) / count((node_filesystem_size_bytes{mountpoint=\"/\"} * on(instance) group_left(node_name) node_meta{node_name=~\"$node\"}))",
+          "expr": "sum(((node_filesystem_size_bytes{mountpoint=\"/data\"} - node_filesystem_free_bytes{mountpoint=\"/data\"}) / node_filesystem_size_bytes{mountpoint=\"/data\"} * on(instance) group_left(node_name) node_meta{node_name=~\"$node\"}) * 100) / count((node_filesystem_size_bytes{mountpoint=\"/\"} * on(instance) group_left(node_name) node_meta{node_name=~\"$node\"}))",
           "format": "time_series",
           "intervalFactor": 1,
           "refId": "A"
@@ -729,7 +730,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "sum((node_filesystem_size_bytes{mountpoint=\"/\"} - node_filesystem_free_bytes{mountpoint=\"/\"}) * on(instance) group_left(node_name) node_meta{node_name=~\"$node\"})",
+          "expr": "sum((node_filesystem_size_bytes{mountpoint=\"/data\"} - node_filesystem_free_bytes{mountpoint=\"/data\"}) * on(instance) group_left(node_name) node_meta{node_name=~\"$node\"})",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "",
@@ -810,7 +811,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "sum(node_filesystem_size_bytes{mountpoint=\"/\"} * on(instance) group_left(node_name) node_meta{node_name=~\"$node\"})",
+          "expr": "sum(node_filesystem_size_bytes{mountpoint=\"/data\"} * on(instance) group_left(node_name) node_meta{node_name=~\"$node\"})",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "",
@@ -1048,7 +1049,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum((node_filesystem_size_bytes{mountpoint=\"/\"} - node_filesystem_free_bytes{mountpoint=\"/\"}) * on(instance) group_left(node_name) node_meta{node_name=~\"$node\"}) by (node_name)",
+          "expr": "sum((node_filesystem_size_bytes{mountpoint=\"/data\"} - node_filesystem_free_bytes{mountpoint=\"/data\"}) * on(instance) group_left(node_name) node_meta{node_name=~\"$node\"}) by (node_name)",
           "format": "time_series",
           "instant": false,
           "interval": "",
