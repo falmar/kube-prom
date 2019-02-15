@@ -730,7 +730,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "sum((node_filesystem_size_bytes{mountpoint=\"/\"} - node_filesystem_free_bytes{mountpoint=\"/\"}) * on(instance) group_left(node_name) node_meta{node_name=~\"$node\"})",
+          "expr": "sum((node_filesystem_size_bytes{mountpoint=\"/data\"} - node_filesystem_free_bytes{mountpoint=\"/data\"}) * on(instance) group_left(node_name) node_meta{node_name=~\"$node\"})",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "",
@@ -811,7 +811,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "sum(node_filesystem_size_bytes{mountpoint=\"/\"} * on(instance) group_left(node_name) node_meta{node_name=~\"$node\"})",
+          "expr": "sum(node_filesystem_size_bytes{mountpoint=\"/data\"} * on(instance) group_left(node_name) node_meta{node_name=~\"$node\"})",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "",
@@ -869,9 +869,9 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "100 -((sum(rate(node_cpu_seconds_total{mode=\"idle\", node_name=~\"$node\"}[$interval])) by (node_name) * 100) / count(node_cpu_seconds_total{mode=\"user\", node_name=~\"$node\"}) by (node_name)) ",
+          "expr": "100 -((sum(irate(node_cpu_seconds_total{mode=\"idle\", node_name=~\"$node\"}[$interval])) by (node_name) * 100) / count(node_cpu_seconds_total{mode=\"user\", node_name=~\"$node\"}) by (node_name)) ",
           "format": "time_series",
-          "intervalFactor": 1,
+          "intervalFactor": 2,
           "legendFormat": "{{node_name}}",
           "refId": "A"
         }
@@ -896,7 +896,7 @@
       },
       "yaxes": [
         {
-          "decimals": null,
+          "decimals": 2,
           "format": "percent",
           "label": null,
           "logBase": 1,
@@ -961,7 +961,7 @@
         {
           "expr": "sum((node_memory_MemTotal_bytes - node_memory_MemFree_bytes - node_memory_Cached_bytes - node_memory_Buffers_bytes - node_memory_Slab_bytes) * on(instance) group_left(node_name) node_meta{node_name=~\"$node\"}) by (node_name)",
           "format": "time_series",
-          "intervalFactor": 1,
+          "intervalFactor": 2,
           "legendFormat": "{{node_name}}",
           "refId": "A"
         }
@@ -986,7 +986,7 @@
       },
       "yaxes": [
         {
-          "decimals": 3,
+          "decimals": null,
           "format": "bytes",
           "label": null,
           "logBase": 1,
@@ -1038,7 +1038,7 @@
       "lines": true,
       "linewidth": 1,
       "links": [],
-      "nullPointMode": "null",
+      "nullPointMode": "null as zero",
       "percentage": false,
       "pointradius": 5,
       "points": false,
@@ -1049,20 +1049,27 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum((node_filesystem_size_bytes{mountpoint=\"/data\"} - node_filesystem_free_bytes{mountpoint=\"/data\"}) * on(instance) group_left(node_name) node_meta{node_name=~\"$node\"}) by (node_name)",
+          "expr": "sum(irate(node_disk_read_bytes_total{node_name=~\"$node\"}[$interval]) * on(instance) group_left(node_name) node_meta{node_name=~\"$node\"}) by (node_name)",
           "format": "time_series",
           "instant": false,
           "interval": "",
-          "intervalFactor": 1,
-          "legendFormat": "{{device}}",
+          "intervalFactor": 2,
+          "legendFormat": "Reads - {{node_name}}",
           "refId": "A"
+        },
+        {
+          "expr": "sum(irate(node_disk_written_bytes_total{node_name=~\"$node\"}[$interval]) * on(instance) group_left(node_name) node_meta{node_name=~\"$node\"}) by (node_name)",
+          "format": "time_series",
+          "intervalFactor": 2,
+          "legendFormat": "Writes - {{node_name}}",
+          "refId": "B"
         }
       ],
       "thresholds": [],
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Disk Usage by Node",
+      "title": "Disk I/O by Node",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -1079,7 +1086,7 @@
       "yaxes": [
         {
           "decimals": null,
-          "format": "bytes",
+          "format": "Bps",
           "label": "",
           "logBase": 1,
           "max": null,
@@ -1221,7 +1228,7 @@
         "hideZero": false,
         "max": true,
         "min": true,
-        "rightSide": true,
+        "rightSide": false,
         "show": false,
         "total": false,
         "values": true
@@ -1236,22 +1243,23 @@
       "renderer": "flot",
       "seriesOverrides": [],
       "spaceLength": 10,
-      "stack": true,
+      "stack": false,
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(rate(container_network_receive_bytes_total{node_name=~\"$node\"}[$interval])) by (node_name)",
+          "expr": "sum(irate(container_network_receive_bytes_total{node_name=~\"$node\",id=\"/\"}[$interval])) by (node_name)",
           "format": "time_series",
           "instant": false,
           "interval": "",
-          "intervalFactor": 1,
+          "intervalFactor": 2,
           "legendFormat": "IN {{node_name}}",
           "refId": "A"
         },
         {
-          "expr": "sum(rate(container_network_transmit_bytes_total{node_name=~\"$node\"}[$interval])) by (node_name) * -1",
+          "expr": "sum(irate(container_network_transmit_bytes_total{node_name=~\"$node\",id=\"/\"}[$interval])) by (node_name) * -1",
           "format": "time_series",
-          "intervalFactor": 1,
+          "instant": false,
+          "intervalFactor": 2,
           "legendFormat": "OUT {{node_name}}",
           "refId": "B"
         }
@@ -1412,7 +1420,7 @@
     ]
   },
   "time": {
-    "from": "now-15m",
+    "from": "now-1h",
     "to": "now"
   },
   "timepicker": {
