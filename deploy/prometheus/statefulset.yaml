@@ -20,7 +20,12 @@ spec:
       automountServiceAccountToken: true
       containers:
         - name: prometheus
-          image: falmar/prom:prometheus_v2
+          image: falmar/prom:prometheus_v1
           ports:
             - containerPort: 9090
+          resources:
+            limits:
+              memory: "600Mi"
+            requests:
+              memory: "400Mi"
 ---

@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: grafana
-          image: falmar/prom:grafana_v2
+          image: falmar/prom:grafana_v1
           ports:
             - containerPort: 3000
 ---
