@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pingy
+  namespace: default
+  labels:
+    app: pingy
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: pingy
+  template:
+    metadata:
+      labels:
+        app: pingy
+    spec:
+      containers:
+        - name: pingy
+          image: falmar/prom:pingy_v1
+          imagePullPolicy: Always
+          env:
+            - name: REQUESTY_HOST
+              value: "requesty-cluster"
+---

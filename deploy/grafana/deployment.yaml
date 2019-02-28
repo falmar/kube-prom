@@ -3,7 +3,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: grafana
-  namespace: prometheus
+  namespace: default
   labels:
     app: grafana
 spec:
